@@ -10,7 +10,7 @@ plugins {
 kotlin {
     androidTarget()
 
-    jvm("desktop")
+    //jvm("desktop")
 
     iosX64()
     iosArm64()
@@ -108,6 +108,7 @@ kotlin {
         targets.withType(KotlinNativeTargetWithSimulatorTests::class.java) {
             testRuns["test"].deviceId = "iPhone 14"
         }
+        /*
         val desktopMain by getting {
             dependencies {
                 implementation(compose.desktop.common)
@@ -119,6 +120,8 @@ kotlin {
                 implementation("junit:junit:4.13.2")
             }
         }
+
+         */
     }
 }
 
