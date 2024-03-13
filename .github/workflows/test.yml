@@ -28,4 +28,4 @@ jobs:
           path: ./output.log
 
       - name: Check for errors
-        run: echo "Exit code: ${{ steps.run-tests.exit_code }}"  # Print the exit code
+        run: echo "Exit code ${{ steps.run-tests.exit_code }}"  # Print the exit code
