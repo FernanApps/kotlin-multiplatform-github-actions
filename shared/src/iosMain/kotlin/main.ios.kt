@@ -1,10 +1,10 @@
 import androidx.compose.ui.window.ComposeUIViewController
+import com.example.ffmpegkit.FFmpegKitConfig
 import platform.UIKit.UIDevice
 
 actual fun getPlatformName(): String {
     val s =  "iOS"
-    println("Printing :::::::::: XXXXX")
-    return s
+    return FFmpegKitConfig.getVersion()
 }
 
 fun MainViewController() = ComposeUIViewController { App() }

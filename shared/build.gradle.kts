@@ -70,7 +70,6 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
                 implementation("app.cash.turbine:turbine:1.0.0")
 
-                implementation("com.arthenica:ffmpeg-kit-full:5.1")
 
             }
         }
@@ -79,6 +78,8 @@ kotlin {
                 api("androidx.activity:activity-compose:1.6.1")
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
+                implementation("com.arthenica:ffmpeg-kit-full:5.1")
+
             }
         }
         val androidUnitTest by getting {
