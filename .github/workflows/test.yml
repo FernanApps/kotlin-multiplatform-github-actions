@@ -14,11 +14,20 @@ jobs:
       - name: iOS set up
         uses: ./.github/actions/ios-set-up  # Assuming you have this step defined
 
-      - name: Run iOS tests (with error handling and log checks)
-        run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose | tee output.log || (echo "Xcodebuild failed. Check the logs for details." && exit 1)
+      - name: Run iOS tests with log capturing
+        run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose | tee output.log 2>&1
+        capture-output: true
 
-      - name: Check if log file exists
-        run: if [ ! -f output.log ]; then echo "Log file not found. Check for errors in the previous step."; exit 1; fi
+      - name: Set debug logging level (optional)
+        run: |
+          xcodebuild -workspace iosApp/iosApp.xcworkspace \
+                     -scheme iosApp \
+                     -configuration Debug \
+                     -sdk iphoneos \
+                     -destination name='iPhone 14' \
+                     ONLY_ACTIVE_TARGET=YES \
+                     build-settings[SWIFT_PACKAGE_DEBUG_FLAGS]=-DDEBUG  # Sets the debug flag
+        shell: bash  # Specifying shell for clarity
 
       - name: Upload logs
         if: always()
@@ -28,4 +37,4 @@ jobs:
           path: ./output.log
 
       - name: Check for errors
-        run: echo "Exit code ${{ steps.run-tests.exit_code }}"  # Print the exit code
+        run: echo "Exit code ${{ steps.run-tests.exit_code }}"  # Print the exit code of the previous step
