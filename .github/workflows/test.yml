@@ -18,7 +18,7 @@ jobs:
       - name: iOS set up
         uses: ./.github/actions/ios-set-up
 
-      - run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose
+      - run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose -quiet NO
 
       - name: Upload logs
         if: always()
