@@ -22,12 +22,26 @@ kotlin {
         homepage = "Link to the Shared Module homepage"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
+
+        pod("ffmpeg-kit-ios-full-gpl", moduleName = "ffmpegkit", version = "~> 5.1")
+
         framework {
             baseName = "shared"
             isStatic = true
         }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
+        extraSpecAttributes["resources"] =
+            "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
+
+
+    //    framework {
+    //        isStatic = true
+    //        freeCompilerArgs += listOf("-Xoverride-konan-properties=osVersionMin=12.1")
+    //        embedBitcode(org.jetbrains.kotlin.gradle.plugin.mpp.BitcodeEmbeddingMode.DISABLE)
+    //    }
+
+
+
 
     sourceSets {
         val commonMain by getting {
@@ -37,15 +51,27 @@ kotlin {
                 implementation(compose.material)
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
+
+
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-Beta")
+                implementation("org.jetbrains.kotlinx:atomicfu:0.20.0")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0")
+
+
             }
         }
         val commonTest by getting {
             dependencies {
+                implementation(kotlin("test"))
                 implementation("org.jetbrains.kotlin:kotlin-test-common:1.9.0")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common:1.9.0")
                 implementation("io.kotest:kotest-assertions-core:5.6.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.2")
                 implementation("app.cash.turbine:turbine:1.0.0")
+
+                implementation("com.arthenica:ffmpeg-kit-full:5.1")
+
             }
         }
         val androidMain by getting {
