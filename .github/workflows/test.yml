@@ -17,7 +17,7 @@ jobs:
       - name: Run iOS tests with log capturing and debug flag (corrected)
         run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace \
           -configuration Debug \
-          -scheme iosApp \  # Corrected: Added the scheme argument
+          -scheme iosApp \ 
           -sdk iphoneos \
           -destination name='iPhone 14' \
           -verbose | tee output.log 2>&1 \
