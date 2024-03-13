@@ -78,9 +78,9 @@ object FFprobeKit {
             val outputString = output
                 .joinToString("") { if(it.level == Level.AV_LOG_STDERR) it.message else "" }
 
-            val ffprobeOutput = json.decodeFromString(FFprobeOutput.serializer(), outputString)
+            //val ffprobeOutput = json.decodeFromString(FFprobeOutput.serializer(), outputString)
 
-            session.mediaInformation = mediaInformation(ffprobeOutput.format, ffprobeOutput.streams)
+            //session.mediaInformation = mediaInformation(ffprobeOutput.format, ffprobeOutput.streams)
         }
     }
 
