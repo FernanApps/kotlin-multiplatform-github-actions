@@ -14,14 +14,14 @@ jobs:
       - name: iOS set up
         uses: ./.github/actions/ios-set-up  # Assuming you have this step defined
 
-      - name: Run iOS tests with log capturing and debug flag
+      - name: Run iOS tests with log capturing and debug flag (corrected)
         run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace \
           -configuration Debug \
-          -scheme iosApp \
+          -scheme iosApp \  # Corrected: Added the scheme argument
           -sdk iphoneos \
           -destination name='iPhone 14' \
           -verbose | tee output.log 2>&1 \
-          build-settings[SWIFT_PACKAGE_DEBUG_FLAGS]=-DDEBUG  # Added flag here
+          build-settings[SWIFT_PACKAGE_DEBUG_FLAGS]=-DDEBUG
 
       - name: Upload logs
         if: always()
