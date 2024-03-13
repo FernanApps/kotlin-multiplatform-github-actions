@@ -1,19 +1,12 @@
 name: Tests
 
-on:
-  workflow_call:
-    inputs:
-      shouldRunKmp:
-        required: true
-        type: string
-      shouldRunIos:
-        required: true
-        type: string
+on: [ push ]
+
 
 jobs:
   iOS:
 #    if: ${{ inputs.shouldRunKmp == 'true' || inputs.shouldRunIos == 'true' }}
-    if: false
+    if: true
     runs-on: macos-12
 
     steps:
@@ -34,7 +27,7 @@ jobs:
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/*"
 
   KMP-iOS:
-    if: ${{ inputs.shouldRunKmp == 'true'}}
+    if: true
     runs-on: macos-12
 
     steps:
