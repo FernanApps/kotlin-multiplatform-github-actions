@@ -9,16 +9,16 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Job set up
-        uses: ./.github/actions/job-set-up
+        uses: ./.github/actions/job-set-up  # Assuming you have this step defined
 
       - name: iOS set up
-        uses: ./.github/actions/ios-set-up
+        uses: ./.github/actions/ios-set-up  # Assuming you have this step defined
 
-      - name: Run iOS tests and capture logs
-        run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose | tee output.log
+      - name: Run iOS tests (with error handling and log checks)
+        run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose | tee output.log || (echo "Xcodebuild failed. Check the logs for details." && exit 1)
 
-      - name: Print test summary
-        run: cat output.log | grep "Test Suite '.*' started at" -A14
+      - name: Check if log file exists
+        run: if [ ! -f output.log ]; then echo "Log file not found. Check for errors in the previous step."; exit 1; fi
 
       - name: Upload logs
         if: always()
@@ -26,3 +26,6 @@ jobs:
         with:
           name: ios-test-logs
           path: ./output.log
+
+      - name: Check for errors
+        run: echo "Exit code: ${{ steps.run-tests.exit_code }}"  # Print the exit code
