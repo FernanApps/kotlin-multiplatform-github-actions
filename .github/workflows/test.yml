@@ -1,14 +1,10 @@
-name: Tests
+name: iOS Tests
 
 on: [ push ]
 
-
 jobs:
   iOS:
-    #    if: ${{ inputs.shouldRunKmp == 'true' || inputs.shouldRunIos == 'true' }}
-    if: true
     runs-on: macos-12
-
     steps:
       - uses: actions/checkout@v3
 
@@ -18,10 +14,16 @@ jobs:
       - name: iOS set up
         uses: ./.github/actions/ios-set-up
 
-      - run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose -quiet NO
+      - name: Run iOS tests and capture logs
+        run: xcodebuild build test -workspace iosApp/iosApp.xcworkspace -configuration Debug -scheme iosApp -sdk iphoneos -destination name='iPhone 14' -verbose | tee output.log
+        capture-output: true
+
+      - name: Print test summary
+        run: cat output.log | grep "Test Suite '.*' started at" -A14
 
       - name: Upload logs
         if: always()
         uses: actions/upload-artifact@v3
         with:
-          path: "/Users/runner/Library/Developer/Xcode/DerivedData/*"
+          name: ios-test-logs
+          path: ./output.log
