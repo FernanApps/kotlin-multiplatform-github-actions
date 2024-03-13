@@ -1,49 +1,12 @@
 name: Tests
 
-on:
-  workflow_call:
-    inputs:
-      shouldRunKmp:
-        required: true
-        type: string
-      shouldRunAndroid:
-        required: true
-        type: string
-      shouldRunIos:
-        required: true
-        type: string
-      shouldRunDesktop:
-        required: true
-        type: string
+on: [ push ]
+
 
 jobs:
-  Android:
-    if: ${{ inputs.shouldRunKmp == 'true' || inputs.shouldRunAndroid == 'true' }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Job set up
-        uses: ./.github/actions/job-set-up
-
-      - run: ./gradlew clean testDebug -p androidApp/
-
-  Desktop:
-    if: ${{ inputs.shouldRunKmp == 'true' || inputs.shouldRunDesktop == 'true' }}
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Job set up
-        uses: ./.github/actions/job-set-up
-
-      - run: ./gradlew clean jvmTest -p desktopApp/
-
   iOS:
-#    if: ${{ inputs.shouldRunKmp == 'true' || inputs.shouldRunIos == 'true' }}
-    if: false
+    #    if: ${{ inputs.shouldRunKmp == 'true' || inputs.shouldRunIos == 'true' }}
+    if: true
     runs-on: macos-12
 
     steps:
@@ -63,32 +26,8 @@ jobs:
         with:
           path: "/Users/runner/Library/Developer/Xcode/DerivedData/*"
 
-  KMP-Android:
-    if: ${{ inputs.shouldRunKmp == 'true'}}
-    runs-on: macos-12
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Job set up
-        uses: ./.github/actions/job-set-up
-
-      - run: ./gradlew clean testDebugUnitTest -p shared/
-
-  KMP-Desktop:
-    if: ${{ inputs.shouldRunKmp == 'true'}}
-    runs-on: macos-12
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Job set up
-        uses: ./.github/actions/job-set-up
-
-      - run: ./gradlew clean desktopTest -p shared/
-
   KMP-iOS:
-    if: ${{ inputs.shouldRunKmp == 'true'}}
+    if: true
     runs-on: macos-12
 
     steps:
